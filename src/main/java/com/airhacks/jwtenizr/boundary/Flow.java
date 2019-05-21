@@ -1,6 +1,7 @@
 
 package com.airhacks.jwtenizr.boundary;
 
+import com.airhacks.jwtenizr.control.Curl;
 import com.airhacks.jwtenizr.control.FileManager;
 import com.airhacks.jwtenizr.control.JwtTokenGenerator;
 import com.airhacks.jwtenizr.control.KeyGenerator;
@@ -33,13 +34,21 @@ public interface Flow {
         }
     }
 
-    public static void generateToken() throws Exception {
+    public static void generateToken(String uri) throws Exception {
+        if (uri == null) {
+            uri = "http://localhost:8080";
+
+        }
         establishPreconditions();
         String jwtToken = JwtTokenGenerator.generateJWTString(TOKEN_FILE_NAME, PRIVATE_KEY_FILE_NAME);
         Terminal.info("---jwt---");
         Terminal.info(jwtToken);
         Terminal.info("---------");
         FileManager.writeBytes(TOKEN_FILE, jwtToken.getBytes(Charset.defaultCharset()));
+        Terminal.info("---");
+        String command = Curl.generate(uri, jwtToken);
+        Terminal.info(command);
+
     }
 
 
