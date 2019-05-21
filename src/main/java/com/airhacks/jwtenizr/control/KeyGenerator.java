@@ -35,14 +35,15 @@ public class KeyGenerator {
         PrivateKey privateKey = pair.getPrivate();
         PublicKey publicKey = pair.getPublic();
 
-        byte[] readable = makeWritable(privateKey);
-        FileManager.writeBytes(this.keyFile + ".key", readable);
+        byte[] writable = makeWritable(privateKey);
+        FileManager.writeBytes(this.keyFile + ".key", writable);
         Terminal.info("public key---");
-        Terminal.info(readable);
+        Terminal.info(writable);
         Terminal.info("\n---");
 
-        readable = makeWritable(publicKey);
-        FileManager.writeBytes(this.keyFile + ".pub", readable);
+        writable = makeWritable(publicKey);
+        FileManager.writeBytes(this.keyFile + ".pub", writable);
+        MicroProfileConfiguration.generate(new String(writable));
         return pair;
     }
 

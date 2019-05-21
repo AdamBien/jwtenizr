@@ -12,7 +12,7 @@ public class FlowTest {
 
     @Test
     public void testGeneratedToken() throws Exception {
-        Flow.generateToken();
+        Flow.generateToken(null);
     }
 
 }
