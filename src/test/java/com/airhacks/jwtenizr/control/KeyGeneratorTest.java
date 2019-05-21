@@ -1,5 +1,6 @@
-package com.airhacks.jwtenizr;
+package com.airhacks.jwtenizr.control;
 
+import com.airhacks.jwtenizr.control.KeyGenerator;
 import java.security.KeyPair;
 import static junit.framework.Assert.assertNotNull;
 import org.junit.Test;
