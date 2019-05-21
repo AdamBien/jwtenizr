@@ -7,7 +7,6 @@ import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import static com.nimbusds.jwt.JWTClaimsSet.parse;
 import com.nimbusds.jwt.SignedJWT;
-import java.io.InputStream;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -22,6 +21,8 @@ import org.eclipse.microprofile.jwt.Claims;
 public interface JwtTokenGenerator {
 
     public static String generateJWTString(String tokenFile, String privateKeyFile) throws Exception {
+        Terminal.info("Reading token: " + tokenFile);
+        Terminal.info("Using private key: " + privateKeyFile);
         String token = FileManager.readString(tokenFile);
         JSONParser parser = new JSONParser(DEFAULT_PERMISSIVE_MODE);
         JSONObject jwtJson = (JSONObject) parser.parse(token);
@@ -47,9 +48,8 @@ public interface JwtTokenGenerator {
         return signedJWT.serialize();
     }
     
-    public static PrivateKey readPrivateKey(String resourceName) throws Exception {
-        InputStream keyStream = JwtTokenGenerator.class.getResourceAsStream(resourceName);
-        String readableStream = FileManager.readString(keyStream);
+    public static PrivateKey readPrivateKey(String privateKeyFile) throws Exception {
+        String readableStream = FileManager.readString(privateKeyFile);
 
         byte[] decodedKey = Base64.getDecoder().decode(readableStream);
         
