@@ -35,15 +35,18 @@ public class KeyGenerator {
         PrivateKey privateKey = pair.getPrivate();
         PublicKey publicKey = pair.getPublic();
 
-        byte[] readable = makeReadable(privateKey);
+        byte[] readable = makeWritable(privateKey);
         FileManager.writeBytes(this.keyFile + ".key", readable);
+        Terminal.info("public key---");
+        Terminal.info(readable);
+        Terminal.info("\n---");
 
-        readable = makeReadable(publicKey);
+        readable = makeWritable(publicKey);
         FileManager.writeBytes(this.keyFile + ".pub", readable);
         return pair;
     }
 
-    byte[] makeReadable(Key key) {
+    byte[] makeWritable(Key key) {
         byte[] encoded = key.getEncoded();
         return Base64.getEncoder().encode(encoded);
     }
