@@ -36,7 +36,9 @@ public interface Flow {
     public static void generateToken() throws Exception {
         establishPreconditions();
         String jwtToken = JwtTokenGenerator.generateJWTString(TOKEN_FILE_NAME, PRIVATE_KEY_FILE_NAME);
+        Terminal.info("---jwt---");
         Terminal.info(jwtToken);
+        Terminal.info("---------");
         FileManager.writeBytes(TOKEN_FILE, jwtToken.getBytes(Charset.defaultCharset()));
     }
 
