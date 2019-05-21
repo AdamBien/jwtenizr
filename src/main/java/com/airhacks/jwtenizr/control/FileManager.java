@@ -46,6 +46,7 @@ public interface FileManager {
     }
 
     public static void write(String fileName, JsonObject defaultToken) throws IOException {
+        Terminal.info("writing " + fileName);
         try (FileOutputStream out = new FileOutputStream(fileName)) {
             try (JsonWriter writer = Json.createWriter(out)) {
                 writer.write(defaultToken);
