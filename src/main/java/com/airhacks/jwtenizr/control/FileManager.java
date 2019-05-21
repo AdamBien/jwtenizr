@@ -9,6 +9,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonWriter;
 
 /**
  *
@@ -40,6 +43,15 @@ public interface FileManager {
         try (FileOutputStream out = new FileOutputStream(fileName)) {
             out.write(content);
         }
+    }
+
+    public static void write(String fileName, JsonObject defaultToken) throws IOException {
+        try (FileOutputStream out = new FileOutputStream(fileName)) {
+            try (JsonWriter writer = Json.createWriter(out)) {
+                writer.write(defaultToken);
+            }
+        }
+
     }
 
 
