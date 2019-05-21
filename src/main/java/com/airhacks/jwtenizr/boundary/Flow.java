@@ -4,6 +4,7 @@ package com.airhacks.jwtenizr.boundary;
 import com.airhacks.jwtenizr.control.FileManager;
 import com.airhacks.jwtenizr.control.JwtTokenGenerator;
 import com.airhacks.jwtenizr.control.KeyGenerator;
+import com.airhacks.jwtenizr.control.Terminal;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,8 +18,9 @@ public interface Flow {
 
     static void establishPreconditions() throws IOException {
         if (!Files.exists(Paths.get(TOKEN_FILE_NAME))) {
+            Terminal.info(TOKEN_FILE_NAME + " does not exist");
             JsonObject defaultToken = JwtTokenGenerator.createDefaultToken();
-            FileManager.write(KEY_FILE_NAME, defaultToken);
+            FileManager.write(TOKEN_FILE_NAME, defaultToken);
         }
     }
 
