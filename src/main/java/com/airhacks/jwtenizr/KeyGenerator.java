@@ -17,19 +17,19 @@ import java.util.Base64;
  */
 public class KeyGenerator {
 
-    private KeyPair pair;
     private final String keyFile;
 
 
-    public KeyGenerator(String keyFileWithoutEnding) throws NoSuchAlgorithmException {
-        KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
-        kpg.initialize(2048);
+    public KeyGenerator(String keyFileWithoutEnding) {
         this.keyFile = keyFileWithoutEnding;
-        this.pair = kpg.generateKeyPair();
     }
 
 
-    public void generateKeys() throws IOException {
+    public KeyPair generateKeys() throws IOException, NoSuchAlgorithmException {
+        KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+        kpg.initialize(2048);
+        KeyPair pair = kpg.generateKeyPair();
+
         PrivateKey privateKey = pair.getPrivate();
         PublicKey publicKey = pair.getPublic();
 
@@ -43,6 +43,7 @@ public class KeyGenerator {
             byte[] readable = makeReadable(publicKey);
             out.write(readable);
         }
+        return pair;
     }
 
     byte[] makeReadable(Key key) {
