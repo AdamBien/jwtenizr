@@ -13,7 +13,11 @@ import java.security.NoSuchAlgorithmException;
 public class App {
 
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException, Exception {
-        Flow.generateToken();
+        if (args.length == 1) {
+            Flow.generateToken(args[0]);
+        } else {
+            Flow.generateToken(null);
+        }
         Terminal.info("---");
     }
 }
