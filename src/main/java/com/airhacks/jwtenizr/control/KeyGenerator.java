@@ -14,20 +14,10 @@ import java.util.Base64;
  *
  * @author airhacks.com
  */
-public class KeyGenerator {
-
-    private final String keyFile;
+public interface KeyGenerator {
 
 
-    public KeyGenerator(String keyFileWithoutEnding) {
-        if (keyFileWithoutEnding.contains(".")) {
-            throw new IllegalArgumentException("The file name " + keyFileWithoutEnding + " contains a .");
-        }
-        this.keyFile = keyFileWithoutEnding;
-    }
-
-
-    public KeyPair generateKeys() throws IOException, NoSuchAlgorithmException {
+    public static KeyPair generateKeys() throws IOException, NoSuchAlgorithmException {
         KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
         kpg.initialize(2048);
         KeyPair pair = kpg.generateKeyPair();
@@ -35,21 +25,21 @@ public class KeyGenerator {
         PrivateKey privateKey = pair.getPrivate();
         PublicKey publicKey = pair.getPublic();
 
-        byte[] writable = makeWritable(privateKey);
-        FileManager.writeBytes(this.keyFile + ".key", writable);
+        String privateKeyString = makeWritable(privateKey);
+        String publicKeyString = makeWritable(publicKey);
         Terminal.info("public key---");
-        Terminal.info(writable);
+        Terminal.info(privateKeyString);
         Terminal.info("\n---");
 
-        writable = makeWritable(publicKey);
-        FileManager.writeBytes(this.keyFile + ".pub", writable);
-        MicroProfileConfiguration.generate(new String(writable));
+        Configuration.storeKeys(privateKeyString, publicKeyString);
+
+        MicroProfileConfiguration.generate(privateKeyString);
         return pair;
     }
 
-    byte[] makeWritable(Key key) {
+    static String makeWritable(Key key) {
         byte[] encoded = key.getEncoded();
-        return Base64.getEncoder().encode(encoded);
+        return Base64.getEncoder().encodeToString(encoded);
     }
 
 }
