@@ -4,6 +4,9 @@ package com.airhacks.jwtenizr.control;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -58,7 +61,8 @@ public interface Configuration {
         try {
             JsonObjectBuilder load = load();
             JsonObject configuration = load.build();
-            return configuration.isNull(PRIVATE_KEY_NAME) || configuration.isNull(PUBLIC_KEY_NAME);
+
+            return configuration.containsKey(PRIVATE_KEY_NAME) && configuration.containsKey(PUBLIC_KEY_NAME);
         } catch (FileNotFoundException ex) {
             return false;
         }
@@ -77,6 +81,10 @@ public interface Configuration {
     public static String loadPrivateKey() throws FileNotFoundException {
         JsonObject configuration = load().build();
         return configuration.getString(PRIVATE_KEY_NAME);
+    }
+
+    static void delete() throws IOException {
+        Files.deleteIfExists(Paths.get(CONFIGURATION_FILE));
     }
 
 }
