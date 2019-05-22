@@ -2,3 +2,4 @@ jwt-token.json
 jwtenizr.key
 jwtenizr.pub
 token.jwt
+microprofile-config.properties
