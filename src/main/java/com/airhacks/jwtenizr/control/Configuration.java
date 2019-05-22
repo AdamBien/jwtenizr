@@ -32,9 +32,11 @@ public interface Configuration {
         }
     }
 
-    public static void write(JsonObject configuration) throws FileNotFoundException {
+    public static void write(JsonObject configuration) {
         try (JsonWriter writer = Json.createWriter(new FileOutputStream(CONFIGURATION_FILE))) {
             writer.writeObject(configuration);
+        } catch (FileNotFoundException ex) {
+            throw new JWTenizrException("cannot write configuration to: " + CONFIGURATION_FILE);
         }
     }
 
@@ -43,17 +45,13 @@ public interface Configuration {
             JsonObject defaultConfiguration = Json.createObjectBuilder().
                     add("microprofile-config.properties_location", ".").
                     build();
-            try {
-                write(defaultConfiguration);
-            } catch (FileNotFoundException ex) {
-                throw new IllegalStateException("Cannot write defualt configuration " + defaultConfiguration + " to file " + CONFIGURATION_FILE);
-            }
+            write(defaultConfiguration);
             Terminal.info(CONFIGURATION_FILE + " default configuration created");
         }
         try {
             return load();
         } catch (FileNotFoundException ex) {
-            throw new IllegalStateException("Cannot find previously written default configuration " + CONFIGURATION_FILE);
+            throw new JWTenizrException("Cannot find previously written default configuration " + CONFIGURATION_FILE);
         }
     }
 
@@ -75,7 +73,9 @@ public interface Configuration {
         } catch (FileNotFoundException ex) {
             configuration = writeDefaultIfNotExists();
         }
-        configuration.add(PRIVATE_KEY_NAME, privateKeyString);
+        JsonObject updatedConfiguration = configuration.add(PRIVATE_KEY_NAME, privateKeyString).
+                add(PUBLIC_KEY_NAME, publicKeyString).build();
+        write(updatedConfiguration);
     }
 
     public static String loadPrivateKey() throws FileNotFoundException {
