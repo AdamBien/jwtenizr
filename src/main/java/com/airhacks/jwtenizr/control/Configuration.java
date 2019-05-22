@@ -17,8 +17,8 @@ import javax.json.JsonWriter;
 public interface Configuration {
 
     static final String KEY_NAME = "jwtenizr";
-    static final String PRIVATE_KEY_FILE_NAME = KEY_NAME + ".key";
-    static final String PUBLIC_KEY_FILE_NAME = KEY_NAME + ".pub";
+    static final String PRIVATE_KEY_NAME = KEY_NAME + ".key";
+    static final String PUBLIC_KEY_NAME = KEY_NAME + ".pub";
 
 
     public final static String CONFIGURATION_FILE = "jwtenizr-config.json";
@@ -58,7 +58,7 @@ public interface Configuration {
         try {
             JsonObjectBuilder load = load();
             JsonObject configuration = load.build();
-            return configuration.isNull(PRIVATE_KEY_FILE_NAME) || configuration.isNull(PUBLIC_KEY_FILE_NAME);
+            return configuration.isNull(PRIVATE_KEY_NAME) || configuration.isNull(PUBLIC_KEY_NAME);
         } catch (FileNotFoundException ex) {
             return false;
         }
@@ -71,7 +71,12 @@ public interface Configuration {
         } catch (FileNotFoundException ex) {
             configuration = writeDefaultIfNotExists();
         }
-        configuration.add(PRIVATE_KEY_FILE_NAME, privateKeyString);
+        configuration.add(PRIVATE_KEY_NAME, privateKeyString);
+    }
+
+    public static String loadPrivateKey() throws FileNotFoundException {
+        JsonObject configuration = load().build();
+        return configuration.getString(PRIVATE_KEY_NAME);
     }
 
 }
