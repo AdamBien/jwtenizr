@@ -7,8 +7,14 @@ package com.airhacks.jwtenizr.control;
  */
 public interface Terminal {
 
-    public static void info(String message) {
+    public static void userInfo(String message) {
         System.out.println(message);
+    }
+
+    public static void info(String message) {
+        if (System.getProperties().containsKey("v")) {
+            System.out.println(message);
+        }
     }
     public static void info(byte[] message) {
         System.out.write(message, 0, message.length);
