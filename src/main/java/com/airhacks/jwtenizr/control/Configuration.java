@@ -93,8 +93,7 @@ public interface Configuration {
             configuration = load().build();
         } catch (FileNotFoundException ex) {
             Terminal.info(ex.getMessage());
-            Terminal.error("Configuration entry for " + key + " not found in: " + configuration);
-            System.exit(-1);
+            throw new JWTenizrException("Configuration entry for " + key + " not found in: " + configuration);
         }
         return configuration.getString(key);
     }
