@@ -2,7 +2,6 @@
 package jwtenizr;
 
 import com.airhacks.jwtenizr.boundary.Flow;
-import com.airhacks.jwtenizr.control.Terminal;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
@@ -18,6 +17,5 @@ public class App {
         } else {
             Flow.generateToken(null);
         }
-        Terminal.info("---");
     }
 }
