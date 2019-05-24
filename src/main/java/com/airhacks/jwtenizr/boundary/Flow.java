@@ -13,15 +13,15 @@ import javax.json.JsonObject;
 
 public interface Flow {
 
-    static final String TOKEN_FILE_NAME = "jwt-token.json";
+    static final String TOKEN_TEMPLATE_FILE_NAME = "jwt-token.json";
     static final String TOKEN_FILE = "token.jwt";
 
     static void establishPreconditions() throws Exception {
 
-        if (!FileManager.exists(TOKEN_FILE_NAME)) {
-            Terminal.info(TOKEN_FILE_NAME + " does not exist, generating default token template");
+        if (!FileManager.exists(TOKEN_TEMPLATE_FILE_NAME)) {
+            Terminal.info(TOKEN_TEMPLATE_FILE_NAME + " does not exist, generating default token template");
             JsonObject defaultToken = JwtTokenGenerator.createDefaultToken();
-            FileManager.write(TOKEN_FILE_NAME, defaultToken);
+            FileManager.write(TOKEN_TEMPLATE_FILE_NAME, defaultToken);
         } else {
             Terminal.info("Token template " + TOKEN_FILE + " is used");
         }
@@ -42,7 +42,7 @@ public interface Flow {
         establishPreconditions();
         String privateKey = Configuration.loadPrivateKey();
         String publicKey = Configuration.loadPublicKey();
-        String jwtToken = JwtTokenGenerator.generateJWTString(TOKEN_FILE_NAME, privateKey);
+        String jwtToken = JwtTokenGenerator.generateJWTString(TOKEN_TEMPLATE_FILE_NAME, privateKey);
         Terminal.info("---jwt---");
         Terminal.info(jwtToken);
         Terminal.info("---------");
@@ -51,11 +51,18 @@ public interface Flow {
         MicroProfileConfiguration.generate(publicKey);
         Terminal.info("---mp configuration written");
         Terminal.info("---");
-        String command = Curl.generate(uri, jwtToken);
-        Terminal.info(command);
+
+        Terminal.userInfo("The generated token contains information loaded from: " + TOKEN_TEMPLATE_FILE_NAME);
+        Terminal.userInfo("Adjust the groups[] to configure roles and upn to change the principal, then re-execute JWTenizr");
+        Terminal.userInfo("The iss has to correspond with the mp.jwt.verify.issuer in microprofile-config.properties");
+        Terminal.userInfo("jwt token written to: " + TOKEN_FILE);
+        Terminal.userInfo("Use the following command to send a HTTP request containing the JWT generated token:");
+        Terminal.userInfo("Copy the microprofile-config.properties to your WAR/src/main/resources/META-INF");
+        Terminal.userInfo("Use the following command for testing:");
+        String command = Curl.command(uri, jwtToken);
+        Terminal.userInfo(command);
 
 
     }
-
-
+    
 }
