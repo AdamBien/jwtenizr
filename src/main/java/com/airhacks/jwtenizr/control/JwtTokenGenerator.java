@@ -48,11 +48,8 @@ public interface JwtTokenGenerator {
         return signedJWT.serialize();
     }
     
-    public static PrivateKey readPrivateKey(String privateKeyFile) throws Exception {
-        String readableStream = FileManager.readString(privateKeyFile);
-
-        byte[] decodedKey = Base64.getDecoder().decode(readableStream);
-        
+    public static PrivateKey readPrivateKey(String privateKey) throws Exception {
+        byte[] decodedKey = Base64.getDecoder().decode(privateKey);
         return KeyFactory.getInstance("RSA")
                 .generatePrivate(new PKCS8EncodedKeySpec(decodedKey));
     }
