@@ -8,6 +8,7 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 
 /**
@@ -24,20 +25,24 @@ public interface KeyGenerator {
 
         PrivateKey privateKey = pair.getPrivate();
         PublicKey publicKey = pair.getPublic();
-
-        String privateKeyString = makeWritable(privateKey);
-        String publicKeyString = makeWritable(publicKey);
+        PKCS8EncodedKeySpec encoded = new PKCS8EncodedKeySpec(publicKey.getEncoded());
+        byte[] privateKeyString = makeWritable(privateKey);
+        byte[] publicKeyString = makeWritable(encoded.getEncoded());
         Terminal.info("public key---");
-        Terminal.info(privateKeyString);
+        Terminal.info(publicKeyString);
         Terminal.info("\n---");
 
         Configuration.storeKeys(privateKeyString, publicKeyString);
         return pair;
     }
 
-    static String makeWritable(Key key) {
+    static byte[] makeWritable(Key key) {
         byte[] encoded = key.getEncoded();
-        return Base64.getEncoder().encodeToString(encoded);
+        return makeWritable(encoded);
+    }
+
+    static byte[] makeWritable(byte[] content) {
+        return Base64.getEncoder().encode(content);
     }
 
 }
