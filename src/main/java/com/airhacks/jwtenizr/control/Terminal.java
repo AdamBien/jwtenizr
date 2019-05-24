@@ -12,15 +12,21 @@ public interface Terminal {
     }
 
     public static void info(String message) {
-        if (System.getProperties().containsKey("v")) {
+        if (isVerbose()) {
             System.out.println(message);
         }
     }
     public static void info(byte[] message) {
-        System.out.write(message, 0, message.length);
+        if (isVerbose()) {
+            System.out.write(message, 0, message.length);
+        }
     }
 
     public static void error(String error) {
         System.err.println(error);
+    }
+
+    public static boolean isVerbose() {
+        return System.getProperties().containsKey("verbose");
     }
 }
