@@ -7,8 +7,8 @@ package com.airhacks.jwtenizr.control;
  */
 public interface Curl {
 
-    public static String generate(String uri, String token) {
-        return String.format("curl -H\'Authorization: Bearer %s\' %s", token, uri);
+    public static String command(String uri, String token) {
+        return String.format("curl -i -H\'Authorization: Bearer %s\' %s", token, uri);
     }
 
 }
