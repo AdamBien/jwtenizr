@@ -79,12 +79,16 @@ public interface Configuration {
     }
 
     public static String loadPrivateKey() throws FileNotFoundException {
-        JsonObject configuration = load().build();
-        return configuration.getString(PRIVATE_KEY_NAME);
+        return getValue(PRIVATE_KEY_NAME);
     }
 
     static void delete() throws IOException {
         Files.deleteIfExists(Paths.get(CONFIGURATION_FILE));
+    }
+
+    public static String getValue(String key) throws FileNotFoundException {
+        JsonObject configuration = load().build();
+        return configuration.getString(key);
     }
 
 }
