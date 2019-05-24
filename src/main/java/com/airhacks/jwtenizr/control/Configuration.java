@@ -67,7 +67,9 @@ public interface Configuration {
         }
     }
 
-    public static void storeKeys(String privateKeyString, String publicKeyString) {
+    public static void storeKeys(byte[] privateKeyArray, byte[] publicKeyArray) {
+        String privateKeyString = new String(privateKeyArray);
+        String publicKeyString = new String(publicKeyArray);
         JsonObjectBuilder configuration;
         try {
             configuration = load();
