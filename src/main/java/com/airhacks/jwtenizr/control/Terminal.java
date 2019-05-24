@@ -13,4 +13,8 @@ public interface Terminal {
     public static void info(byte[] message) {
         System.out.write(message, 0, message.length);
     }
+
+    public static void error(String error) {
+        System.err.println(error);
+    }
 }
