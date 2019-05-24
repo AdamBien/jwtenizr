@@ -18,6 +18,7 @@ public interface MicroProfileConfiguration {
 
     public static void generate(String publicKey) throws IOException {
         String location = Configuration.mpConfigurationLocation();
+        String issuer = Configuration.issuer();
         Properties properties = new Properties();
         properties.setProperty("mp.jwt.verify.publickey", publicKey);
         properties.setProperty("mp.jwt.verify.issuer", "-");

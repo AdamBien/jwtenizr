@@ -26,6 +26,7 @@ public interface Configuration {
 
 
     public final static String CONFIGURATION_FILE = "jwtenizr-config.json";
+    public static final String MP_CONFIG_ISSUER = "mp.jwt.verify.issuer";
 
     public static JsonObjectBuilder load() throws FileNotFoundException {
         try (JsonReader reader = Json.createReader(new FileInputStream(CONFIGURATION_FILE))) {
@@ -45,6 +46,7 @@ public interface Configuration {
         if (!FileManager.exists(CONFIGURATION_FILE)) {
             JsonObject defaultConfiguration = Json.createObjectBuilder().
                     add(MP_CONFIG_LOCATION_FOLDER, ".").
+                    add(MP_CONFIG_ISSUER, "ADD_YOURS").
                     build();
             write(defaultConfiguration);
             Terminal.info(CONFIGURATION_FILE + " default configuration created");
@@ -106,6 +108,10 @@ public interface Configuration {
 
     public static String mpConfigurationLocation() {
         return getValue(MP_CONFIG_LOCATION_FOLDER);
+    }
+
+    public static String issuer() {
+        return getValue(MP_CONFIG_ISSUER);
     }
 
 }
