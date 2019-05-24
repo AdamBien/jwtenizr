@@ -21,7 +21,7 @@ public interface MicroProfileConfiguration {
         String issuer = Configuration.issuer();
         Properties properties = new Properties();
         properties.setProperty("mp.jwt.verify.publickey", publicKey);
-        properties.setProperty("mp.jwt.verify.issuer", "-");
+        properties.setProperty("mp.jwt.verify.issuer", issuer);
         Path path = Paths.get(location, MP_CONFIG_FILENAME);
         File configurationLocation = path.toFile();
         Terminal.info("Writing mpconfig to: " + MP_CONFIG_FILENAME);
