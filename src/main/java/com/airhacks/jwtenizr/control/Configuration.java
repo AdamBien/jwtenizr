@@ -19,6 +19,7 @@ import javax.json.JsonWriter;
  */
 public interface Configuration {
 
+    static final String MP_CONFIG_LOCATION_FOLDER = "microprofile-config.properties_location";
     static final String KEY_NAME = "jwtenizr";
     static final String PRIVATE_KEY_NAME = KEY_NAME + ".key";
     static final String PUBLIC_KEY_NAME = KEY_NAME + ".pub";
@@ -43,7 +44,7 @@ public interface Configuration {
     public static JsonObjectBuilder writeDefaultIfNotExists() {
         if (!FileManager.exists(CONFIGURATION_FILE)) {
             JsonObject defaultConfiguration = Json.createObjectBuilder().
-                    add("microprofile-config.properties_location", ".").
+                    add(MP_CONFIG_LOCATION_FOLDER, ".").
                     build();
             write(defaultConfiguration);
             Terminal.info(CONFIGURATION_FILE + " default configuration created");
@@ -86,9 +87,20 @@ public interface Configuration {
         Files.deleteIfExists(Paths.get(CONFIGURATION_FILE));
     }
 
-    public static String getValue(String key) throws FileNotFoundException {
-        JsonObject configuration = load().build();
+    public static String getValue(String key) {
+        JsonObject configuration = null;
+        try {
+            configuration = load().build();
+        } catch (FileNotFoundException ex) {
+            Terminal.info(ex.getMessage());
+            Terminal.error("Configuration entry for " + key + " not found in: " + configuration);
+            System.exit(-1);
+        }
         return configuration.getString(key);
+    }
+
+    public static String mpConfigurationLocation() {
+        return getValue(MP_CONFIG_LOCATION_FOLDER);
     }
 
 }
