@@ -3,3 +3,4 @@ jwtenizr.key
 jwtenizr.pub
 token.jwt
 microprofile-config.properties
+cleanup.sh
