@@ -85,6 +85,10 @@ public interface Configuration {
         return getValue(PRIVATE_KEY_NAME);
     }
 
+    public static String loadPublicKey() throws FileNotFoundException {
+        return getValue(PUBLIC_KEY_NAME);
+    }
+
     static void delete() throws IOException {
         Files.deleteIfExists(Paths.get(CONFIGURATION_FILE));
     }
