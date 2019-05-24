@@ -6,6 +6,7 @@ import com.airhacks.jwtenizr.control.Curl;
 import com.airhacks.jwtenizr.control.FileManager;
 import com.airhacks.jwtenizr.control.JwtTokenGenerator;
 import com.airhacks.jwtenizr.control.KeyGenerator;
+import com.airhacks.jwtenizr.control.MicroProfileConfiguration;
 import com.airhacks.jwtenizr.control.Terminal;
 import java.nio.charset.Charset;
 import javax.json.JsonObject;
@@ -46,8 +47,12 @@ public interface Flow {
         Terminal.info("---------");
         FileManager.writeBytes(TOKEN_FILE, jwtToken.getBytes(Charset.defaultCharset()));
         Terminal.info("---");
+        MicroProfileConfiguration.generate(privateKey);
+        Terminal.info("---mp configuration written");
+        Terminal.info("---");
         String command = Curl.generate(uri, jwtToken);
         Terminal.info(command);
+
 
     }
 

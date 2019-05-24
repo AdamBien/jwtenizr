@@ -32,8 +32,6 @@ public interface KeyGenerator {
         Terminal.info("\n---");
 
         Configuration.storeKeys(privateKeyString, publicKeyString);
-
-        MicroProfileConfiguration.generate(privateKeyString);
         return pair;
     }
 
