@@ -8,7 +8,10 @@ import com.airhacks.jwtenizr.control.JwtTokenGenerator;
 import com.airhacks.jwtenizr.control.KeyGenerator;
 import com.airhacks.jwtenizr.control.MicroProfileConfiguration;
 import com.airhacks.jwtenizr.control.Terminal;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.Properties;
 import javax.json.JsonObject;
 
 public interface Flow {
@@ -39,6 +42,7 @@ public interface Flow {
             uri = "http://localhost:8080";
 
         }
+        printWelcomeMessage();
         establishPreconditions();
         String privateKey = Configuration.loadPrivateKey();
         String publicKey = Configuration.loadPublicKey();
@@ -62,7 +66,21 @@ public interface Flow {
         String command = Curl.command(uri, jwtToken);
         Terminal.userInfo(command);
 
+    }
 
+    static void printWelcomeMessage() throws IOException {
+        try (InputStream resourceAsStream = Flow.class.
+                getClassLoader().
+                getResourceAsStream("META-INF/maven/com.airhacks/jwtenizr/pom.properties")) {
+            if (resourceAsStream == null) {
+                return;
+            }
+            Properties properties = new Properties();
+            properties.load(resourceAsStream);
+            String app = properties.getProperty("artifactId");
+            String version = properties.getProperty("version");
+            System.out.println(app + " " + version);
+        }
     }
     
 }
