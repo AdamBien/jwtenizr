@@ -17,7 +17,7 @@ public interface Flow {
 
     static void establishPreconditions() throws Exception {
 
-        if (FileManager.exists(TOKEN_FILE_NAME)) {
+        if (!FileManager.exists(TOKEN_FILE_NAME)) {
             Terminal.info(TOKEN_FILE_NAME + " does not exist, generating default token template");
             JsonObject defaultToken = JwtTokenGenerator.createDefaultToken();
             FileManager.write(TOKEN_FILE_NAME, defaultToken);
