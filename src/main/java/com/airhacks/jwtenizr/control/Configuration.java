@@ -46,7 +46,7 @@ public interface Configuration {
         if (!FileManager.exists(CONFIGURATION_FILE)) {
             JsonObject defaultConfiguration = Json.createObjectBuilder().
                     add(MP_CONFIG_LOCATION_FOLDER, ".").
-                    add(MP_CONFIG_ISSUER, "ADD_YOURS").
+                    add(MP_CONFIG_ISSUER, "airhacks").
                     build();
             write(defaultConfiguration);
             Terminal.info(CONFIGURATION_FILE + " default configuration created");
