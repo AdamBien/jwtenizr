@@ -57,10 +57,9 @@ public interface Flow {
         Terminal.info("---");
 
         Terminal.userInfo("Enable verbose output with java -Dverbose -jar jwtenizr.jar");
-        Terminal.userInfo("The generated token contains information loaded from: " + TOKEN_TEMPLATE_FILE_NAME);
-        Terminal.userInfo("Adjust the groups[] to configure roles and upn to change the principal, then re-execute JWTenizr");
-        Terminal.userInfo("The iss has to correspond with the mp.jwt.verify.issuer in microprofile-config.properties");
-        Terminal.userInfo("Use the following command to send a HTTP request containing the JWT generated token: " + TOKEN_FILE);
+        Terminal.userInfo("The generated token " + TOKEN_FILE + " contains information loaded from: " + TOKEN_TEMPLATE_FILE_NAME);
+        Terminal.userInfo("Adjust the groups[] to configure roles and upn to change the principal in " + TOKEN_TEMPLATE_FILE_NAME + " then re-execute JWTenizr");
+        Terminal.userInfo("The iss in " + TOKEN_TEMPLATE_FILE_NAME + " has to correspond with the mp.jwt.verify.issuer in microprofile-config.properties");
         Terminal.userInfo("Copy the microprofile-config.properties to your WAR/src/main/resources/META-INF");
         Terminal.userInfo("Use the following command for testing:");
         String command = Curl.command(uri, jwtToken);
