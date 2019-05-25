@@ -9,20 +9,24 @@ Download the executable and self-contained [jwtenizr.jar](https://github.com/Ada
 
 ## usage
 
+### initial run
+
 `java -jar jwtenizr.jar` creates:
 
-- Reusable, default `jwtenizr-config.json` with public, private key
-- Default token configuration / template: `jwt-token.json`, it already contains the [Minimum MP-JWT Required Claims](https://www.eclipse.org/community/eclipse_newsletter/2017/september/article2.php) a sample principle and a few groups
-- Adjust the `groups[]` to configure roles and `upn` to change the principal in `jwt-token.json` then re-execute JWTenizr
-- `microprofile-config.properties` with generated public key and default issuer (corresponds with jwt-token.json)
-- The iss in `jwt-token.json` has to correspond with the `mp.jwt.verify.issuer` in `microprofile-config.properties`
-- Copy the `microprofile-config.properties` to your WAR/src/main/resources/META-INF
+- Reusable, default `jwtenizr-config.json` with public, private key and target folder of `microprofile-config.properties`
+- A default token configuration / template: `jwt-token.json`, which already contains the [Minimum MP-JWT Required Claims](https://www.eclipse.org/community/eclipse_newsletter/2017/september/article2.php), a sample principle and a few groups
+- The generated token `token.jwt` contains information loaded from: `jwt-token.json` and can be used as input for automated  system tests
+- Copy the generated `microprofile-config.properties` to your `WAR/src/main/resources/META-INF`
 - Optional: Adjust the trailing URI in the `curl` command and use it for testing:
 
 ```curl -i -H'Authorization: Bearer eyJraW¢...(generated JWT token)' http://localhost:8080[RESOURCE and SUB-RESOURCES]```
 
-- The generated token `token.jwt` contains information loaded from: `jwt-token.json` and can be used as input for automated  system tests
+### customizations
 
+- Adjust the `groups[]` to configure roles and `upn` to change the principal in `jwt-token.json` then re-execute JWTenizr
+- Add additional claims to: `jwt-token.json`
+
+Note: The iss in `jwt-token.json` has to correspond with the `mp.jwt.verify.issuer` in `microprofile-config.properties`
 
 ## run from anywhere
 
