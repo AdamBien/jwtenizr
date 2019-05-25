@@ -2,6 +2,10 @@
 
 jwtenizr creates tokens and ready to use microprofile configuration. 
 
+## installation
+
+Download the executable and self-contained [jwtenizr.jar](https://github.com/AdamBien/jwtenizr/releases) and execute:
+`java -jar jwtenizr.jar`
 
 `java -jar jwtenizr.jar` creates:
 
