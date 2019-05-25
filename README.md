@@ -4,7 +4,7 @@ jwtenizr creates tokens and ready to use microprofile configuration.
 
 ## installation
 
-Download the executable and self-contained [jwtenizr.jar](https://github.com/AdamBien/jwtenizr/releases) and execute:
+Download the executable and self-contained [jwtenizr.jar](https://github.com/AdamBien/jwtenizr/releases/latest) and execute:
 `java -jar jwtenizr.jar`
 
 ## usage
@@ -13,18 +13,18 @@ Download the executable and self-contained [jwtenizr.jar](https://github.com/Ada
 
 `java -jar jwtenizr.jar` creates:
 
-- `jwtenizr-config.json` with public, private key and target folder of `microprofile-config.properties`. 
+- `jwtenizr-config.json` with public, private key and target folder of `microprofile-config.properties`
 - `jwt-token.json`: with [Minimum MP-JWT Required Claims](https://www.eclipse.org/community/eclipse_newsletter/2017/september/article2.php), a sample principal and a few groups
 - `token.jwt`: with information loaded from: `jwt-token.json` and can be used as input for automated  system tests
-- `microprofile-config.properties` comprising the public key an the issuer: copy to your `WAR/src/main/resources/META-INF`. 
-- `curl` command: already contains the `Authorization` header with the encoded JW token:
+- `microprofile-config.properties` comprising the public key an the issuer: copy to your `WAR/src/main/resources/META-INF` 
+- `curl` command: with `Authorization` header and included token:
 
 ```curl -i -H'Authorization: Bearer eyJraW¢...(generated JWT token)' http://localhost:8080[RESOURCE and SUB-RESOURCES]```
 
 ### customizations
 
 - Adjust the `groups[]` to configure roles and `upn` to change the principal in `jwt-token.json` then re-execute JWTenizr
-- Add additional claims to: `jwt-token.json`
+- Add additional claims by extending: `jwt-token.json`
 
 Note: The iss in `jwt-token.json` has to correspond with the `mp.jwt.verify.issuer` in `microprofile-config.properties`
 
