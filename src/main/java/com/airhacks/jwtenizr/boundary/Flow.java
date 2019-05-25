@@ -56,7 +56,7 @@ public interface Flow {
         Terminal.info("---mp configuration written");
         Terminal.info("---");
 
-        Terminal.userInfo("Enable verbose output with java -Dverbose -jar jwtenizr.jar");
+        Terminal.userInfo("Enable verbose output with java -Dverbose -jar jwtenizr.jar [optional: an URI for the generated curl]");
         Terminal.userInfo("The generated token " + TOKEN_FILE + " contains information loaded from: " + TOKEN_TEMPLATE_FILE_NAME);
         Terminal.userInfo("Adjust the groups[] to configure roles and upn to change the principal in " + TOKEN_TEMPLATE_FILE_NAME + " then re-execute JWTenizr");
         Terminal.userInfo("The iss in " + TOKEN_TEMPLATE_FILE_NAME + " has to correspond with the mp.jwt.verify.issuer in microprofile-config.properties");
