@@ -13,9 +13,9 @@ Download the executable and self-contained [jwtenizr.jar](https://github.com/Ada
 
 `java -jar jwtenizr.jar` creates:
 
--`jwtenizr-config.json` with public, private key and target folder of `microprofile-config.properties`. 
-- `jwt-token.json`:, with [Minimum MP-JWT Required Claims](https://www.eclipse.org/community/eclipse_newsletter/2017/september/article2.php), a sample principal and a few groups
-- `token.jwt`: contains information loaded from: `jwt-token.json` and can be used as input for automated  system tests
+- `jwtenizr-config.json` with public, private key and target folder of `microprofile-config.properties`. 
+- `jwt-token.json`: with [Minimum MP-JWT Required Claims](https://www.eclipse.org/community/eclipse_newsletter/2017/september/article2.php), a sample principal and a few groups
+- `token.jwt`: with information loaded from: `jwt-token.json` and can be used as input for automated  system tests
 - `microprofile-config.properties` comprising the public key an the issuer: copy to your `WAR/src/main/resources/META-INF`. 
 - `curl` command: already contains the `Authorization` header with the encoded JW token:
 
