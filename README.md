@@ -39,3 +39,7 @@ java -jar ${BASEDIR}/jwtenizr.jar "$@"%
 ```
 
 will install JWTenizr "globally". Now you can launch JWTenizr from any directory you like
+
+## in action
+
+[![](https://i.ytimg.com/vi/twXqCoYQ16c/mqdefault.jpg)](https://www.youtube.com/embed/twXqCoYQ16c?rel=0)
