@@ -42,6 +42,7 @@ public interface FileManager {
     public static void writeBytes(String fileName, byte[] content) throws IOException {
         try (FileOutputStream out = new FileOutputStream(fileName)) {
             out.write(content);
+            out.flush();
         }
     }
 
