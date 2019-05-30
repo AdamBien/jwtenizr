@@ -21,6 +21,13 @@ public class ConfigurationTest {
         assertFalse(Configuration.keysExist());
     }
 
+    @Test
+    public void writeDefaultIfNotExists() throws IOException {
+        Configuration.delete();
+        Configuration configuration = Configuration.writeDefaultIfNotExists();
+        assertNotNull(configuration);
+    }
+
     @Test(expected = JWTenizrException.class)
     public void loadMpConfigurationLocationFromNull() throws IOException {
         Configuration.delete();
