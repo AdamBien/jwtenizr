@@ -38,7 +38,7 @@ public class Configuration {
         Terminal.info(CONFIGURATION_FILE + " configuration saved");
     }
 
-    public static Configuration writeDefaultIfNotExists() throws IOException {
+    public static Configuration writeDefaultIfNotExists() {
         if (!FileManager.exists(CONFIGURATION_FILE)) {
             new Configuration().save();
         }
@@ -74,7 +74,7 @@ public class Configuration {
     }
 
     static void storeKeys(byte[] privateKeyAsBytes, byte[] publicKeyAsBytes) {
-        Configuration loaded = load();
+        Configuration loaded = writeDefaultIfNotExists();
         loaded.privateKey = new String(privateKeyAsBytes);
         loaded.publicKey = new String(publicKeyAsBytes);
         loaded.save();
