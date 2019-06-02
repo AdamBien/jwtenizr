@@ -20,7 +20,7 @@ import jwtenizr.App;
 public interface Terminal {
 
     public static void printUserInfo(String message) {
-        System.out.println(message);
+        System.out.printf("%s%s%s\n", TerminalColors.INFO.value(), message, TerminalColors.RESET.value());
     }
 
     public static void info(String message) {
@@ -51,7 +51,7 @@ public interface Terminal {
                 getClassLoader().
                 getResourceAsStream("META-INF/maven/com.airhacks/wad/pom.properties")) {
             if (resourceAsStream == null) {
-                System.out.println("jwtenizr - unknown version");
+                System.out.println("\njwtenizr - unknown version\n");
                 return;
             }
             Properties properties = new Properties();
@@ -59,7 +59,7 @@ public interface Terminal {
             String jwtenizr = properties.getProperty("artifactId");
             String version = properties.getProperty("version");
             printTime();
-            System.out.println(jwtenizr + " " + version);
+            System.out.printf("%s %s\n\n", jwtenizr, version);
         }
     }
 
@@ -85,7 +85,7 @@ public interface Terminal {
     }
 
     public static void printCommand(String command) {
-        System.out.printf("\n%s%s%s\n", TerminalColors.COMMAND.value(), command, TerminalColors.RESET.value());
+        System.out.printf("\n\n%s%s%s\n\n", TerminalColors.COMMAND.value(), command, TerminalColors.RESET.value());
     }
 
 }
