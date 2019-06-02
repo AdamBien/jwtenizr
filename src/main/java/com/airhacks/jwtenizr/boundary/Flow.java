@@ -8,10 +8,7 @@ import com.airhacks.jwtenizr.control.JwtTokenGenerator;
 import com.airhacks.jwtenizr.control.KeyGenerator;
 import com.airhacks.jwtenizr.control.MicroProfileConfiguration;
 import com.airhacks.jwtenizr.control.Terminal;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.util.Properties;
 import javax.json.JsonObject;
 
 public interface Flow {
@@ -42,7 +39,7 @@ public interface Flow {
             uri = "http://localhost:8080";
 
         }
-        printWelcomeMessage();
+        Terminal.printWelcomeMessage();
         establishPreconditions();
         String privateKey = Configuration.loadPrivateKey();
         String publicKey = Configuration.loadPublicKey();
@@ -56,30 +53,15 @@ public interface Flow {
         Terminal.info("---mp configuration written");
         Terminal.info("---");
 
-        Terminal.userInfo("Enable verbose output with java -Dverbose -jar jwtenizr.jar [optional: an URI for the generated curl]");
-        Terminal.userInfo("The generated token " + TOKEN_FILE + " contains information loaded from: " + TOKEN_TEMPLATE_FILE_NAME);
-        Terminal.userInfo("Adjust the groups[] to configure roles and upn to change the principal in " + TOKEN_TEMPLATE_FILE_NAME + " then re-execute JWTenizr");
-        Terminal.userInfo("The iss in " + TOKEN_TEMPLATE_FILE_NAME + " has to correspond with the mp.jwt.verify.issuer in microprofile-config.properties");
-        Terminal.userInfo("Copy the microprofile-config.properties to your WAR/src/main/resources/META-INF");
-        Terminal.userInfo("Use the following command for testing:");
+        Terminal.printUserInfo("Enable verbose output with java -Dverbose -jar jwtenizr.jar [optional: an URI for the generated curl]");
+        Terminal.printUserInfo("The generated token " + TOKEN_FILE + " contains information loaded from: " + TOKEN_TEMPLATE_FILE_NAME);
+        Terminal.printUserInfo("Adjust the groups[] to configure roles and upn to change the principal in " + TOKEN_TEMPLATE_FILE_NAME + " then re-execute JWTenizr");
+        Terminal.printUserInfo("The iss in " + TOKEN_TEMPLATE_FILE_NAME + " has to correspond with the mp.jwt.verify.issuer in microprofile-config.properties");
+        Terminal.printUserInfo("Copy the microprofile-config.properties to your WAR/src/main/resources/META-INF");
+        Terminal.printUserInfo("Use the following command for testing:");
         String command = Curl.command(uri, jwtToken);
-        Terminal.userInfo(command);
-
-    }
-
-    static void printWelcomeMessage() throws IOException {
-        try (InputStream resourceAsStream = Flow.class.
-                getClassLoader().
-                getResourceAsStream("META-INF/maven/com.airhacks/jwtenizr/pom.properties")) {
-            if (resourceAsStream == null) {
-                return;
-            }
-            Properties properties = new Properties();
-            properties.load(resourceAsStream);
-            String app = properties.getProperty("artifactId");
-            String version = properties.getProperty("version");
-            System.out.println(app + " " + version);
-        }
+        Terminal.printCommand(command);
+        Terminal.printDoneMessage();
     }
     
 }
