@@ -8,7 +8,7 @@ package com.airhacks.jwtenizr.control;
  */
 public enum TerminalColors {
 
-    FILE("\u001B[34m"), TIME("\033[1;90m"), RESET("\u001B[0m"), COMMAND("\033[0;97m");
+    INFO("\033[0;33m"), TIME("\033[1;90m"), RESET("\u001B[0m"), COMMAND("\033[0;97m");
 
     private final String value;
 
