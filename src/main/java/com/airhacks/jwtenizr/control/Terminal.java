@@ -11,6 +11,7 @@ import static java.time.temporal.ChronoField.HOUR_OF_DAY;
 import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import java.util.Properties;
+import jwtenizr.App;
 
 /**
  *
@@ -46,21 +47,24 @@ public interface Terminal {
     }
 
     public static void printWelcomeMessage() throws IOException {
-        try (InputStream resourceAsStream = Terminal.class.
+        try (InputStream resourceAsStream = App.class.
                 getClassLoader().
                 getResourceAsStream("META-INF/maven/com.airhacks/wad/pom.properties")) {
+            if (resourceAsStream == null) {
+                System.out.println("jwtenizr - unknown version");
+                return;
+            }
             Properties properties = new Properties();
             properties.load(resourceAsStream);
-            String wad = properties.getProperty("artifactId");
+            String jwtenizr = properties.getProperty("artifactId");
             String version = properties.getProperty("version");
             printTime();
-            System.out.println(wad + " " + version);
+            System.out.println(jwtenizr + " " + version);
         }
     }
 
     static void printDoneMessage() {
         printTime();
-        System.out.println("----");
         System.out.println("JWT generated");
     }
 
@@ -74,14 +78,14 @@ public interface Terminal {
                 .appendLiteral(':')
                 .appendValue(SECOND_OF_MINUTE, 2)
                 .appendLiteral(':')
-                .appendValue(ChronoField.MILLI_OF_SECOND, 2)
+                .appendValue(ChronoField.MILLI_OF_SECOND, 3)
                 .toFormatter();
 
         return LocalTime.now().format(timeFormatter);
     }
 
     public static void printCommand(String command) {
-        printUserInfo(command);
+        System.out.printf("\n%s%s%s\n", TerminalColors.COMMAND.value(), command, TerminalColors.RESET.value());
     }
 
 }
