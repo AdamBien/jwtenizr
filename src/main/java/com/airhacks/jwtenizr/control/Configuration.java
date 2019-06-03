@@ -16,13 +16,13 @@ public class Configuration {
 
     public String privateKey;
     public String publicKey;
-    public String mpConfiguratioFolder;
+    public String mpConfigurationFolder;
     public String mpConfigIssuer;
 
     private final static String CONFIGURATION_FILE = "jwtenizr-config.json";
 
     protected Configuration() {
-        this.mpConfiguratioFolder = ".";
+        this.mpConfigurationFolder = ".";
         this.mpConfigIssuer = "airhacks";
     }
 
@@ -66,7 +66,7 @@ public class Configuration {
     }
 
     public static String mpConfigurationLocation() {
-        return load().mpConfiguratioFolder;
+        return load().mpConfigurationFolder;
     }
 
     public static String issuer() {

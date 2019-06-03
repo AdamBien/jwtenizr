@@ -5,3 +5,4 @@ token.jwt
 microprofile-config.properties
 jwtenizr-config.json
 cleanup.sh
+/target/

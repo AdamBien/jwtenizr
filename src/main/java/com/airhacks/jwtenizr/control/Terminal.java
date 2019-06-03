@@ -49,7 +49,7 @@ public interface Terminal {
     public static void printWelcomeMessage() throws IOException {
         try (InputStream resourceAsStream = App.class.
                 getClassLoader().
-                getResourceAsStream("META-INF/maven/com.airhacks/wad/pom.properties")) {
+                getResourceAsStream("META-INF/maven/com.airhacks/jwtenizr/pom.properties")) {
             if (resourceAsStream == null) {
                 System.out.println("\njwtenizr - unknown version\n");
                 return;
