@@ -20,7 +20,10 @@ public interface MicroProfileConfiguration {
         String location = Configuration.mpConfigurationLocation();
         String issuer = Configuration.issuer();
         Properties properties = new Properties();
-        properties.setProperty("mp.jwt.verify.publickey", publicKey);
+
+        // https://github.com/OpenLiberty/guide-microprofile-jwt/issues/108#issuecomment-541760294
+        // https://github.com/eclipse/microprofile-jwt-auth/blob/main/spec/src/main/asciidoc/configuration.asciidoc#pcks8
+        properties.setProperty("mp.jwt.verify.publickey", "-----BEGIN PUBLIC KEY-----" + publicKey + "-----END PUBLIC KEY-----");
         properties.setProperty("mp.jwt.verify.issuer", issuer);
         Path path = Paths.get(location, MP_CONFIG_FILENAME);
         File configurationLocation = path.toFile();
