@@ -1,13 +1,8 @@
 
 package com.airhacks.jwtenizr.boundary;
 
-import com.airhacks.jwtenizr.control.Configuration;
-import com.airhacks.jwtenizr.control.Curl;
-import com.airhacks.jwtenizr.control.FileManager;
-import com.airhacks.jwtenizr.control.JwtTokenGenerator;
-import com.airhacks.jwtenizr.control.KeyGenerator;
-import com.airhacks.jwtenizr.control.MicroProfileConfiguration;
-import com.airhacks.jwtenizr.control.Terminal;
+import com.airhacks.jwtenizr.control.*;
+
 import java.nio.charset.Charset;
 import javax.json.JsonObject;
 
@@ -59,6 +54,9 @@ public interface Flow {
         Terminal.info("---");
         MicroProfileConfiguration.generate(publicKey);
         Terminal.info("---mp configuration written");
+        Terminal.info("---");
+        JwkConfiguration.generate(publicKey);
+        Terminal.info("---jwk written");
         Terminal.info("---");
 
         Terminal.printUserInfo("Enable verbose output with java -Dverbose -jar jwtenizr.jar [optional: an URI for the generated curl]");
