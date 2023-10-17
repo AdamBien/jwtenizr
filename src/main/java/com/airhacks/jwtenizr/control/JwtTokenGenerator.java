@@ -1,27 +1,25 @@
 package com.airhacks.jwtenizr.control;
 
-import static com.nimbusds.jose.JOSEObjectType.JWT;
-import static com.nimbusds.jose.JWSAlgorithm.RS256;
-import static com.nimbusds.jwt.JWTClaimsSet.parse;
-import static net.minidev.json.parser.JSONParser.DEFAULT_PERMISSIVE_MODE;
-
-import java.security.KeyFactory;
-import java.security.PrivateKey;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.Base64;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-
-import org.eclipse.microprofile.jwt.Claims;
-
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
+import org.eclipse.microprofile.jwt.Claims;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.util.Base64;
+import java.util.UUID;
+
+import static com.nimbusds.jose.JOSEObjectType.JWT;
+import static com.nimbusds.jose.JWSAlgorithm.RS256;
+import static com.nimbusds.jwt.JWTClaimsSet.parse;
+import static net.minidev.json.parser.JSONParser.DEFAULT_PERMISSIVE_MODE;
 
 public interface JwtTokenGenerator {
 
@@ -38,14 +36,18 @@ public interface JwtTokenGenerator {
         jwtJson.put(Claims.iat.name(), currentTimeInSecs);
         jwtJson.put(Claims.auth_time.name(), currentTimeInSecs);
 
-        if (!jwtJson.containsKey(Claims.exp.name()) ) {
+        if (!jwtJson.containsKey(Claims.exp.name())) {
             jwtJson.put(Claims.exp.name(), expirationTime);
         }
 
+        if (!jwtJson.containsKey(Claims.jti.name())) {
+            jwtJson.put(Claims.jti.name(), UUID.randomUUID().toString());
+        }
+
         JWSHeader header = new JWSHeader.Builder(RS256)
-                .keyID("jwt.key").
-                type(JWT).
-                build();
+                .keyID("jwt.key")
+                .type(JWT)
+                .build();
 
         JWTClaimsSet claimSet = parse(jwtJson);
         SignedJWT signedJWT = new SignedJWT(header, claimSet);
