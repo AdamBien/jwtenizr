@@ -12,10 +12,11 @@ import java.security.NoSuchAlgorithmException;
 public class App {
 
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException, Exception {
+        String tokenSourceFile = System.getProperties().getProperty("tokenSourceFile");
         if (args.length == 1) {
-            Flow.generateToken(args[0]);
+            Flow.generateToken(args[0], tokenSourceFile);
         } else {
-            Flow.generateToken(null);
+            Flow.generateToken(null, tokenSourceFile);
         }
     }
 }
